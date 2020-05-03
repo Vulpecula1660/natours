@@ -1,4 +1,4 @@
-# Natours Application
+# Natours Application https://vulpecula1660.herokuapp.com/
 
 ## Built using modern technologies: node.js, express, mongoDB, mongoose
 
@@ -15,3 +15,5 @@
 * Complete modern authentication with JWT
 
 * Deploying Node.js application to production with Heroku
+
+can use Email address: max@example.com , Password: test1234 to login
