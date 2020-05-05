@@ -70,11 +70,17 @@ if (bookBtn)
 const alertMessage = document.querySelector('body').dataset.alert;
 if (alertMessage) showAlert('success', alertMessage, 20);
 
-const file = document.getElementById('photo').files[0];
-const reader = new FileReader();
+const inputForm = document.querySelector('.form__upload');
 
-reader.onload = e => {
-  document.getElementById('image_id').src = e.target.result;
-};
+if (inputForm) {
+  inputForm.addEventListener('change', () => {
+    const file = document.getElementById('photo').files[0];
+    const reader = new FileReader();
 
-reader.readAsDataURL(file);
+    reader.onload = e => {
+      document.querySelector('.form__user-photo').src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
