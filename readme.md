@@ -16,4 +16,4 @@
 
 * Deploying Node.js application to production with Heroku
 
-can use Email address: max@example.com , Password: test1234 to login
+can use Email address: victor@example.com , Password: test1234 to login
