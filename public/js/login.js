@@ -36,3 +36,24 @@ export const logout = async () => {
     showAlert('error', 'Error logging out! Try again.');
   }
 };
+
+export const forgotPassword = async email => {
+  try {
+    const res = await axios({
+      method: 'POST',
+      url: '/api/v1/users/forgotPassword',
+      data: {
+        email
+      }
+    });
+
+    if ((res.data.status = 'success')) {
+      showAlert(
+        'success',
+        'Your reset token has been sent to your email! Please check mail to reset your password'
+      );
+    }
+  } catch (err) {
+    showAlert('error', 'Error logging out! Try again.');
+  }
+};

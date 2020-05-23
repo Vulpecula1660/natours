@@ -1,7 +1,7 @@
 /* eslint-disable */
 import '@babel/polyfill';
 import { displayMap } from './mapbox';
-import { login, logout } from './login';
+import { login, logout, forgotPassword } from './login';
 import { signup } from './signup';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
@@ -14,6 +14,7 @@ const signupForm = document.querySelector('.form--signup');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
+const forgotPasswordForm = document.getElementById('forgotPasswordForm');
 const bookBtn = document.getElementById('book-tour');
 
 // DELEGATION
@@ -71,6 +72,18 @@ if (userPasswordForm)
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
   });
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    document.querySelector('.btn--forgot-password').textContent =
+      'Sending email...';
+    const email = document.getElementById('email').value;
+
+    await forgotPassword(email);
+    document.querySelector('.btn--forgot-password').textContent = 'Submit';
+  });
+}
 
 if (bookBtn)
   bookBtn.addEventListener('click', e => {

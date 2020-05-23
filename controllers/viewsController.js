@@ -91,3 +91,9 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
     user: updatedUser
   });
 });
+
+exports.getForgotPasswordForm = (req, res) => {
+  res.render('forgotPassword', {
+    title: 'Forgot your password?'
+  });
+};
