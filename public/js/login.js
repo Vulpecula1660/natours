@@ -57,3 +57,25 @@ export const forgotPassword = async email => {
     showAlert('error', 'Error logging out! Try again.');
   }
 };
+
+export const resetPassword = async (token, newPass, newPassConfirm) => {
+  try {
+    const res = await axios({
+      method: 'PATCH',
+      url: `/api/v1/users/resetPassword/${token}`,
+      data: {
+        password: newPass,
+        passwordConfirm: newPassConfirm
+      }
+    });
+
+    if ((res.data.status = 'success')) {
+      showAlert('success', 'Reset password successfully!');
+      window.setTimeout(() => {
+        location.assign('/me');
+      }, 1000);
+    }
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+  }
+};
