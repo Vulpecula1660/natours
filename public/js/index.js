@@ -1,7 +1,7 @@
 /* eslint-disable */
 import '@babel/polyfill';
 import { displayMap } from './mapbox';
-import { login, logout, forgotPassword } from './login';
+import { login, logout, forgotPassword, resetPassword } from './login';
 import { signup } from './signup';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
@@ -15,6 +15,7 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+const resetPasswordForm = document.getElementById('resetPasswordForm');
 const bookBtn = document.getElementById('book-tour');
 
 // DELEGATION
@@ -82,6 +83,21 @@ if (forgotPasswordForm) {
 
     await forgotPassword(email);
     document.querySelector('.btn--forgot-password').textContent = 'Submit';
+  });
+}
+
+if (resetPasswordForm) {
+  resetPasswordForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    document.querySelector('.btn--reset-password').textContent =
+      'Validating...';
+
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
+    const resetToken = window.location.href.split('/')[4];
+
+    await resetPassword(resetToken, password, passwordConfirm);
+    document.querySelector('.btn--reset-password').textContent = 'Submit';
   });
 }
 

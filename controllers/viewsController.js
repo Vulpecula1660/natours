@@ -97,3 +97,9 @@ exports.getForgotPasswordForm = (req, res) => {
     title: 'Forgot your password?'
   });
 };
+
+exports.getResetPasswordForm = (req, res) => {
+  res.render('resetPassword', {
+    title: 'Reset your password'
+  });
+};
