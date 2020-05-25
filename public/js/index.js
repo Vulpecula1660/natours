@@ -4,6 +4,7 @@ import { displayMap } from './mapbox';
 import { login, logout, forgotPassword, resetPassword } from './login';
 import { signup } from './signup';
 import { updateSettings } from './updateSettings';
+import { submitReview } from './submitReview';
 import { bookTour } from './stripe';
 import { showAlert } from './alerts';
 
@@ -16,6 +17,9 @@ const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const forgotPasswordForm = document.getElementById('forgotPasswordForm');
 const resetPasswordForm = document.getElementById('resetPasswordForm');
+const showReviewBtn = document.querySelector('.btn--show-review');
+const reviewStars = document.querySelector('.reviews__rating-review');
+const reviewSubmitBtn = document.querySelector('.btn--submit-review');
 const bookBtn = document.getElementById('book-tour');
 
 // DELEGATION
@@ -98,6 +102,66 @@ if (resetPasswordForm) {
 
     await resetPassword(resetToken, password, passwordConfirm);
     document.querySelector('.btn--reset-password').textContent = 'Submit';
+  });
+}
+
+const addListenerToSubmitReview = () => {
+  reviewSubmitBtn.addEventListener('click', e => {
+    e.preventDefault();
+    const reviewText = document.querySelector('.review__form-text').value;
+    const reviewRating = stars.filter(star =>
+      star.classList.contains('reviews__star--active')
+    );
+
+    if (!reviewText || reviewRating.length === 0)
+      return showAlert('error', 'Please provide a review and a rating!');
+
+    submitReview(reviewText, reviewRating.length);
+  });
+};
+
+if (showReviewBtn) {
+  showReviewBtn.addEventListener('click', e => {
+    e.preventDefault();
+    addListenerToSubmitReview();
+
+    const reviewForm = document.querySelector('.review__form');
+    if (reviewForm.style.visibility !== 'visible') {
+      // show review form and scroll to it
+      reviewForm.style.visibility = 'visible';
+      reviewForm.style.height = '40rem';
+      reviewForm.style.margin = '2rem auto';
+      reviewForm.style.padding = '7rem 0';
+
+      window.scroll({
+        top: document.body.scrollHeight * 0.72,
+        left: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      // scroll to review form
+      window.scroll({
+        top: document.body.scrollHeight * 0.65,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  });
+}
+
+const stars = Array.from(document.querySelectorAll('.reviews__star--big'));
+if (reviewStars) {
+  reviewStars.addEventListener('click', e => {
+    const clicked = stars.indexOf(e.target);
+
+    if (clicked >= 0) {
+      stars.forEach((star, i) => {
+        star.classList =
+          i > clicked
+            ? 'reviews__star--big reviews__star--inactive'
+            : 'reviews__star--big reviews__star--active';
+      });
+    }
   });
 }
 

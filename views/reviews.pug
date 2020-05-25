@@ -1,0 +1,18 @@
+extends base
+
+block content
+    if reviews.length === 0
+        include _noReviews
+    else
+        h1.heading-primary.heading-primary--green My Tour Reviews
+        each review in reviews
+            .user-reviews
+                figure.review
+                    .review__tour
+                        img.review__photo(src=`/img/tours/${review.tour.imageCover}` alt=`Photo of ${review.tour.name} tour`)
+                        .review__user-box
+                            p.review__tour-name= review.tour.name
+                            p.review__tour-date= review.createdAt.toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric'})
+                    blockquote.review__text= review.review
+                    .review__rating-circle
+                        h3.review__user-rating= `${review.rating} / 5`

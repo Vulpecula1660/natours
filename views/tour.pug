@@ -72,8 +72,29 @@ block content
 
   section.section-reviews
     .reviews
-      each review in tour.reviews
-        +reviewCard(review)
+      if tour.reviews.length === 0
+        h1.heading-primary No reviews for this tour yet!
+      if user && !reviewByUser
+        .reviews__card
+          .reviews__avatar
+            img.reviews__avatar-img(src=`/img/users/${user.photo}`, alt=`${user.name}`)
+            h6.reviews__user= user.name
+          p.reviews__text.reviews__text--new Submit your review now!
+          button.btn.btn--green.btn--small.btn--show-review Post a review
+             
+      each review in reviews
+        if review === reviewByUser
+          +reviewCard(review, true)
+        else
+          +reviewCard(review, false)
+    .review__form
+      h1.heading-secondary Your review
+      textarea.review__form-text(maxlength='100' required)
+      .reviews__rating.reviews__rating-review
+        each star in [1,2,3,4,5]
+          svg.reviews__star--big.reviews__star--inactive
+            use(xlink:href='/img/icons.svg#icon-star')
+      button.btn.btn--green.btn--small.btn--submit-review Submit review
 
   section.section-cta
     .cta
