@@ -4,7 +4,6 @@ const Reviews = require('../models/reviewModel');
 const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-// const jwt = require('jsonwebtoken');
 
 exports.alerts = (req, res, next) => {
   const { alert } = req.query;
@@ -102,7 +101,6 @@ exports.getMyReviews = catchAsync(async (req, res, next) => {
     'tour',
     'name imageCover slug'
   );
-  // console.log(reviews[0]);
 
   res.status(200).render('reviews', {
     title: 'My reviews',
